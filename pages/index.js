@@ -19,13 +19,13 @@ function ProfileSidebar(propriedades) {
         style={{ borderRadius: '8px' }}
       />
       <hr />
+      <a
+        className="boxLink"
+        href={`https://github.com/${propriedades.githubUser}`}
+      >
+        @{propriedades.githubUser}
+      </a>
       <p>
-        <a
-          className="boxLink"
-          href={`https://github.com/${propriedades.githubUser}`}
-        >
-          @{propriedades.githubUser}
-        </a>
         <br />
         Masculino, solteiro(a)
         <br />
