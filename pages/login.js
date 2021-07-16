@@ -40,7 +40,7 @@ export default function LoginScreen() {
             className="box"
             onSubmit={infosDoEvento => {
               infosDoEvento.preventDefault();
-              console.log('Usuário: ', githubUser);
+
               fetch('https://alurakut.vercel.app/api/login', {
                 method: 'POST',
                 headers: {
