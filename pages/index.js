@@ -232,46 +232,8 @@ export default function Home(props) {
 //   };
 // }
 
-// export async function getServerSideProps(context) {
-//   const cookies = nookies.get(context);
-//   const token = cookies.USER_TOKEN;
-//   const { isAuthenticated } = await fetch(
-//     'https://alurakut.vercel.app/api/auth',
-//     {
-//       headers: {
-//         Authorization: token
-//       }
-//     }
-//   ).then(resposta => resposta.json());
-
-//   if (!isAuthenticated) {
-//     return {
-//       redirect: {
-//         destination: '/login',
-//         permanent: false
-//       }
-//     };
-//   }
-
-//   const { githubUser } = jwt.decode(token);
-//   return {
-//     props: {
-//       githubUser
-//     }
-//   };
-// }
-
 export async function getServerSideProps(context) {
   const cookies = nookies.get(context);
-  if (!cookies.USER_TOKEN) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false
-      }
-    };
-  }
-
   const token = cookies.USER_TOKEN;
   const { isAuthenticated } = await fetch(
     'https://alurakut.vercel.app/api/auth',
@@ -282,14 +244,15 @@ export async function getServerSideProps(context) {
     }
   ).then(resposta => resposta.json());
 
-  if (isAuthenticated) {
+  if (!isAuthenticated) {
     return {
       redirect: {
-        destination: '/',
+        destination: '/login',
         permanent: false
       }
     };
   }
+
   const { githubUser } = jwt.decode(token);
   return {
     props: {
@@ -297,3 +260,40 @@ export async function getServerSideProps(context) {
     }
   };
 }
+
+// export async function getServerSideProps(context) {
+//   const cookies = nookies.get(context);
+//   if (!cookies.USER_TOKEN) {
+//     return {
+//       redirect: {
+//         destination: '/login',
+//         permanent: false
+//       }
+//     };
+//   }
+
+//   const token = cookies.USER_TOKEN;
+//   const { isAuthenticated } = await fetch(
+//     'https://alurakut.vercel.app/api/auth',
+//     {
+//       headers: {
+//         Authorization: token
+//       }
+//     }
+//   ).then(resposta => resposta.json());
+
+//   if (isAuthenticated) {
+//     return {
+//       redirect: {
+//         destination: '/',
+//         permanent: false
+//       }
+//     };
+//   }
+//   const { githubUser } = jwt.decode(token);
+//   return {
+//     props: {
+//       githubUser
+//     }
+//   };
+// }
